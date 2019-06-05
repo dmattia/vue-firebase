@@ -7,6 +7,7 @@
 <script>
 import * as firebase from "firebase/app";
 import "firebase/database";
+import "firebase/auth";
 
 export default {
   name: "FireProvider",

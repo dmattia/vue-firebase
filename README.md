@@ -63,3 +63,8 @@ npm install
 ```
 npm run serve
 ```
+
+### Inspired by
+https://akryum.github.io/vue-apollo/guide/components/query.html
+https://github.com/vuejs/vuefire
+https://github.com/FirebaseExtended/polymerfire

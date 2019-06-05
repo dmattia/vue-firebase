@@ -1,8 +1,18 @@
 <template>
   <div id="app">
-    <input v-model="path" type="text" />
+    <FireProvider
+      :databaseURL="`https://vue-firebase-8bf0c.firebaseio.com`"
+      :authDomain="`vue-firebase-8bf0c.firebaseapp.com`"
+      :apiKey="`AIzaSyB_JLBsyGUznYqg9uzhzTTwNbF8LvPsWGU`"
+    >
+      <FireAuth>
+        <template v-slot="{ isLoggedIn, user }">
+          <p v-if="isLoggedIn">{{ user }}</p>
+          <p v-else>No user is logged in</p>
+        </template>
+      </FireAuth>
+      <input v-model="path" type="text" />
 
-    <FireProvider :databaseURL="`https://vue-firebase-8bf0c.firebaseio.com`">
       <FireList :path="path">
         <template v-slot="{ loading, error, data }">
           <p v-if="loading">Loading...</p>
@@ -16,12 +26,13 @@
 </template>
 
 <script>
+import FireAuth from "./components/FireAuth.vue";
 import FireProvider from "./components/FireProvider.vue";
 import FireList from "./components/FireList.vue";
 
 export default {
   name: "app",
-  components: { FireProvider, FireList },
+  components: { FireProvider, FireList, FireAuth },
   data() {
     return {
       path: ""
