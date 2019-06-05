@@ -1,16 +1,4 @@
-<template>
-  <div>
-    <slot name="loading" v-if="loading"></slot>
-    <slot name="error" :msg="errorMsg" v-else-if="errorMsg"></slot>
-    <slot name="success" :data="data" v-else-if="data"></slot>
-    <slot name="no-data" v-else></slot>
-  </div>
-</template>
-
-<script>
 export default {
-  name: "FireQuery",
-
   inject: ["firebase"],
 
   data() {
@@ -23,18 +11,27 @@ export default {
     };
   },
 
+  created() {
+    if (!this.firebase) {
+      console.err(
+        "No FireProvider component was found in the component tree. ",
+        "Please ensure you wrap any <Fire.*> components inside a <FireProvider>"
+      );
+    }
+  },
+
   methods: {
     runQuery() {
-      this.ref = this.firebase.database().ref(this.path);
+      this.loading = true;
 
       if (this.shouldListen) {
-        this.unsubscribeToListener = this.ref.on(
+        this.unsubscribeToListener = this.query.on(
           "value",
           this.onSuccess,
           this.onError
         );
       } else {
-        this.ref
+        this.query
           .once("value")
           .then(this.onSuccess)
           .catch(this.onError);
@@ -62,22 +59,39 @@ export default {
   },
 
   watch: {
-    path() {
-      if (this.unsubscribeToListener != null) {
-        this.ref.off("value", this.unsubscribeToListener);
+    query(query, oldQuery) {
+      if (query.isEqual(oldQuery)) {
+        return;
       }
-      this.unsubscribeToListener = null;
+
+      if (oldQuery) {
+        oldQuery.off("value", this.unsubscribeToListener);
+      }
 
       this.runQuery();
     }
   },
 
   props: {
-    path: String,
+    path: {
+      type: String,
+      required: true
+    },
     shouldListen: {
       type: Boolean,
       default: true
     }
+  },
+
+  computed: {
+    query() {
+      var query = this.firebase.database().ref();
+
+      if (this.path.length) {
+        query = query.child(this.path);
+      }
+
+      return query;
+    }
   }
 };
-</script>

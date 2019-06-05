@@ -27,8 +27,50 @@ export default {
     firebase.initializeApp(this.config);
   },
 
+  computed: {
+    config() {
+      const config = {};
+
+      if (this.apiKey) {
+        config.apiKey = this.apiKey;
+      }
+
+      if (this.authDomain) {
+        config.authDomain = this.authDomain;
+      }
+
+      if (this.databaseURL) {
+        config.databaseURL = this.databaseURL;
+      }
+
+      if (this.projectId) {
+        config.projectId = this.projectId;
+      }
+
+      if (this.storageBucket) {
+        config.storageBucket = this.storageBucket;
+      }
+
+      if (this.messagingSenderId) {
+        config.messagingSenderId = this.messagingSenderId;
+      }
+
+      if (this.appId) {
+        config.appId = this.appId;
+      }
+
+      return config;
+    }
+  },
+
   props: {
-    config: Object
+    apiKey: String,
+    authDomain: String,
+    databaseURL: String,
+    projectId: String,
+    storageBucket: String,
+    messagingSenderId: String,
+    appId: String
   }
 };
 </script>

@@ -2,43 +2,29 @@
   <div id="app">
     <input v-model="path" type="text" />
 
-    <FireProvider :config="firebaseConfig">
-      <FireQuery :path="path" :shouldListen="false">
-        <template v-slot:error="{ errorMsg }">
-          Error: {{ errorMsg }}
+    <FireProvider :databaseURL="`https://vue-firebase-8bf0c.firebaseio.com`">
+      <FireList :path="path">
+        <template v-slot="{ loading, error, data }">
+          <p v-if="loading">Loading...</p>
+          <p v-else-if="error">Error: {{ error }}</p>
+          <p v-else-if="data">{{ data }}</p>
+          <p v-else>No data found at path: '/{{ path }}'</p>
         </template>
-
-        <template v-slot:loading>
-          Loading...
-        </template>
-
-        <template v-slot:success="{ data }">
-          {{ data }}
-        </template>
-
-        <template v-slot:no-data>
-          No data found at path: {{ path }}
-        </template>
-      </FireQuery>
+      </FireList>
     </FireProvider>
   </div>
 </template>
 
 <script>
 import FireProvider from "./components/FireProvider.vue";
-import FireQuery from "./components/FireQuery.vue";
-
-var firebaseConfig = {
-  databaseURL: "https://vue-firebase-8bf0c.firebaseio.com"
-};
+import FireList from "./components/FireList.vue";
 
 export default {
   name: "app",
-  components: { FireProvider, FireQuery },
+  components: { FireProvider, FireList },
   data() {
     return {
-      firebaseConfig,
-      path: "test"
+      path: ""
     };
   }
 };
