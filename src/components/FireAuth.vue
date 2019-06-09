@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot :user="user"></slot>
+    <slot :user="user" :isLoggedIn="!!user" :loading="loading"></slot>
   </div>
 </template>
 
@@ -13,13 +13,15 @@ export default {
   data() {
     return {
       user: null,
-      unsubscribe: undefined
+      unsubscribe: undefined,
+      loading: true
     };
   },
 
   created() {
     this.unsubscribe = this.firebase.auth().onAuthStateChanged(user => {
       this.user = user;
+      this.loading = false;
     });
   },
 
@@ -27,13 +29,6 @@ export default {
     if (this.unsubscribe !== undefined) {
       this.unsubscribe();
     }
-  },
-
-  provide() {
-    return {
-      isLoggedIn: !!this.user,
-      user: this.user
-    };
   }
 };
 </script>
