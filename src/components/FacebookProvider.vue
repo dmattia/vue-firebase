@@ -1,6 +1,6 @@
 <template>
   <CustomProvider
-    :providerId="this.firebase.auth.GithubAuthProvider.PROVIDER_ID"
+    :providerId="this.firebase.auth.FacebookAuthProvider.PROVIDER_ID"
   >
     <slot></slot>
   </CustomProvider>
@@ -10,7 +10,7 @@
 import CustomProvider from "./AuthProvider.vue";
 
 export default {
-  name: "GithubProvider",
+  name: "FacebookProvider",
 
   inject: ["firebase"],
 

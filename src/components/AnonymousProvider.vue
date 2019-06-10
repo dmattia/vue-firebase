@@ -1,17 +1,22 @@
 <template>
-  <div id="anonymousProvider"></div>
+  <CustomProvider :providerId="providerId">
+    <slot></slot>
+  </CustomProvider>
 </template>
 
 <script>
+import CustomProvider from "./AuthProvider.vue";
+import FirebaseUi from "firebaseui";
+
 export default {
   name: "AnonymousProvider",
 
-  inject: ["firebase", "authConfig"],
+  data() {
+    return {
+      providerId: FirebaseUi.auth.AnonymousAuthProvider.PROVIDER_ID
+    };
+  },
 
-  created() {
-    this.authConfig.signInOptions.push({
-      provider: this.firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
-    });
-  }
+  components: { CustomProvider }
 };
 </script>

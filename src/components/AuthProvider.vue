@@ -46,11 +46,23 @@ export default {
 
   computed: {
     config() {
-      return {
-        provider: this.providerId,
-        scopes: Object.keys(this.scopes),
-        customParameters: this.customParameters
+      const config = {
+        provider: this.providerId
       };
+
+      if (Object.keys(this.scopes).length) {
+        config.scopes = Object.keys(this.scopes);
+      }
+
+      if (Object.keys(this.customParameters).length) {
+        config.customParameters = this.customParameters;
+      }
+
+      if (this.providerName) config.providerName = this.providerName;
+      if (this.buttonColor) config.buttonColor = this.buttonColor;
+      if (this.iconUrl) config.iconUrl = this.iconUrl;
+
+      return config;
     }
   },
 
@@ -74,6 +86,21 @@ export default {
     providerId: {
       type: String,
       required: true
+    },
+
+    providerName: {
+      type: String,
+      default: null
+    },
+
+    buttonColor: {
+      type: String,
+      default: null
+    },
+
+    iconUrl: {
+      type: String,
+      default: null
     }
   }
 };

@@ -2,7 +2,7 @@
   <div id="authui">
     <slot></slot>
     <div id="firebaseui-auth-container"></div>
-    {{ joinedConfig }}
+    <pre style="text-align: left">{{ joinedConfig | prettify }}</pre>
   </div>
 </template>
 
@@ -15,10 +15,18 @@ export default {
 
   inject: ["firebase"],
 
+  // TODO(dmattia): Remove filter
+  filters: {
+    prettify(json) {
+      return JSON.stringify(json, null, 2);
+    }
+  },
+
   data() {
     return {
       config: this.setInitialConfig(),
       providerDict: {},
+      customOptions: {},
       ui: new firebaseui.auth.AuthUI(this.firebase.auth())
     };
   },
@@ -30,6 +38,10 @@ export default {
 
     removeProvider(provider) {
       this.$delete(this.providerDict, provider);
+    },
+
+    setCustomOptions(provider, options) {
+      this.$set(this.customOptions, provider, options);
     },
 
     setInitialConfig() {
@@ -46,15 +58,37 @@ export default {
         config.callbacks.signInSuccessWithAuthResult = this.signInSuccessWithAuthResult;
       }
 
+      if (this.signInFailure) {
+        config.callbacks.signInFailure = this.signInFailure;
+      }
+
+      if (this.uiShown) config.callbacks.uiShown = this.uiShown;
+
       return config;
     }
   },
 
   computed: {
+    providers() {
+      return Object.keys(this.providerDict).map(providerId => {
+        const provider = {
+          provider: providerId,
+          ...this.providerDict[providerId],
+          ...this.customOptions[providerId]
+        };
+
+        if (Object.keys(provider).length === 1) {
+          return providerId;
+        }
+
+        return provider;
+      });
+    },
+
     joinedConfig() {
       return {
         ...this.config,
-        signInOptions: Object.values(this.providerDict)
+        signInOptions: this.providers
       };
     }
   },
@@ -67,7 +101,8 @@ export default {
     return {
       authConfig: this.config,
       updateProvider: this.updateProvider,
-      removeProvider: this.removeProvider
+      removeProvider: this.removeProvider,
+      setCustomOptions: this.setCustomOptions
     };
   },
 
@@ -85,31 +120,48 @@ export default {
       type: String,
       default: "signInSuccessUrl"
     },
+
     queryParameterForWidgetMode: {
       type: String,
       default: "mode"
     },
+
     signInFlow: {
       type: String,
       default: "redirect"
     },
+
     immediateFederatedRedirect: {
       type: Boolean,
       default: false
     },
+
     signInSuccessUrl: {
       type: String,
       default: null
     },
+
     tosUrl: {
       type: String,
       required: true
     },
+
     privacyPolicyUrl: {
       type: String,
       required: true
     },
+
     signInSuccessWithAuthResult: {
+      type: Function,
+      default: null
+    },
+
+    uiShown: {
+      type: Function,
+      default: null
+    },
+
+    signInFailure: {
       type: Function,
       default: null
     }
