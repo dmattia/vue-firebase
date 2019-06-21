@@ -5,6 +5,11 @@
 </template>
 
 <script>
+/**
+ * Class used internally for FacebookProvider, TwitterProvider, etc.
+ * Can also serve a purpose for providers not given custom provider
+ * implementations, such as Microsoft or Yahoo.
+ */
 export default {
   name: "CustomProvider",
 

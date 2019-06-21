@@ -8,6 +8,9 @@
 import CustomProvider from "./AuthProvider.vue";
 import FirebaseUi from "firebaseui";
 
+/**
+ * Adds "Checkout as Guest" option to firebaseui.
+ */
 export default {
   name: "AnonymousProvider",
 

@@ -2,25 +2,17 @@
   <div id="authui">
     <slot></slot>
     <div id="firebaseui-auth-container"></div>
-    <pre style="text-align: left">{{ joinedConfig | prettify }}</pre>
   </div>
 </template>
 
 <script>
 import * as firebaseui from "firebaseui";
-require("firebaseui/dist/firebaseui.css");
+// require("firebaseui/dist/firebaseui.css");
 
 export default {
   name: "AuthUi",
 
   inject: ["firebase"],
-
-  // TODO(dmattia): Remove filter
-  filters: {
-    prettify(json) {
-      return JSON.stringify(json, null, 2);
-    }
-  },
 
   data() {
     return {
