@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fireList">
     <slot :data="data" :error="errorMsg" :loading="loading"></slot>
   </div>
 </template>
@@ -49,9 +49,9 @@ export default {
 
   computed: {
     query() {
-      var query = this.firebase.database().ref();
+      let query = this.firebase.database().ref();
 
-      if (this.path.length) {
+      if (this.path) {
         query = query.child(this.path);
       }
 

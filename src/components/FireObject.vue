@@ -10,6 +10,6 @@ import QueryMixin from "../mixins/Query";
 export default {
   name: "FireObject",
 
-  mixins: [QueryMixin],
+  mixins: [QueryMixin]
 };
 </script>
