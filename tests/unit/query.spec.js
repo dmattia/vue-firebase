@@ -5,24 +5,24 @@ import * as firebase from "firebase/app";
 import MockFirebaseProvider from "./MockFirebaseProvider.vue";
 import Vue from "vue";
 
-import FireList from "../../src/components/FireList.vue";
+import Query from "../../src/components/database/Query.vue";
 
 const TestComponent = {
-  components: { FireList },
+  components: { Query },
 
   template: `
-    <FireList path="test" ref="list">
+    <Query path="test" ref="list">
       <template v-slot="{ loading, error, data }">
         <p v-if="loading">Loading...</p>
         <p v-else-if="error">Error: {{ error }}</p>
         <p v-else-if="!data">No data found at path: '/test'</p>
         <p v-else>{{ data }}</p>
       </template>
-    </FireList>
+    </Query>
   `
 };
 
-describe("FireList.vue", () => {
+describe("Query.vue", () => {
   test.skip("respects endAt", () => {});
   test.skip("respects startAt", () => {});
   test.skip("respects equalTo", () => {});
@@ -91,7 +91,7 @@ describe("FireList.vue", () => {
       </div>
     `;
 
-    const wrapper = shallowMount(FireList, {
+    const wrapper = shallowMount(Query, {
       propsData: {
         path: "test",
         limitToFirst: 3

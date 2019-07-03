@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import CustomProvider from "./AuthProvider.vue";
+import CustomProvider from "@/components/auth/firebaseui/providers/AuthProvider.vue";
 
 export default {
   name: "FacebookProvider",

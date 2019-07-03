@@ -8,7 +8,7 @@
 export default {
   name: "FireAuth",
 
-  inject: ["firebase"],
+  inject: ["firebaseApp"],
 
   data() {
     return {
@@ -19,7 +19,7 @@ export default {
   },
 
   created() {
-    this.unsubscribe = this.firebase.auth().onAuthStateChanged(user => {
+    this.unsubscribe = this.firebaseApp.auth().onAuthStateChanged(user => {
       this.user = user;
       this.loading = false;
     });

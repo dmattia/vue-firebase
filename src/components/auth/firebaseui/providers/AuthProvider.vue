@@ -13,7 +13,7 @@
 export default {
   name: "CustomProvider",
 
-  inject: ["firebase", "updateProvider", "removeProvider"],
+  inject: ["updateProvider", "removeProvider"],
 
   provide() {
     return {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CustomProvider from "./AuthProvider.vue";
+import CustomProvider from "@/components/auth/firebaseui/providers/AuthProvider.vue";
 import firebase from "firebase/app";
 
 export default {

@@ -7,19 +7,20 @@
 
 <script>
 import * as firebaseui from "firebaseui";
-// require("firebaseui/dist/firebaseui.css");
+
+import "firebaseui/dist/firebaseui.css";
 
 export default {
   name: "AuthUi",
 
-  inject: ["firebase"],
+  inject: ["firebaseApp"],
 
   data() {
     return {
       config: this.setInitialConfig(),
       providerDict: {},
       customOptions: {},
-      ui: new firebaseui.auth.AuthUI(this.firebase.auth())
+      ui: new firebaseui.auth.AuthUI(this.firebaseApp.auth(), this.firebaseApp.name)
     };
   },
 

@@ -66,14 +66,14 @@
 
       <input v-model="path" type="text" />
 
-      <FireList :path="path">
+      <Query :path="path">
         <template v-slot="{ loading, error, data }">
           <p v-if="loading">Loading...</p>
           <p v-else-if="error">Error: {{ error }}</p>
           <p v-else-if="data">{{ data }}</p>
           <p v-else>No data found at path: '/{{ path }}'</p>
         </template>
-      </FireList>
+      </Query>
     </FireProvider>
   </div>
 </template>
@@ -82,7 +82,7 @@
 import FireAuth from "./components/FireAuth.vue";
 import AuthUi from "./components/AuthUi.vue";
 import FireProvider from "./components/FireProvider.vue";
-import FireList from "./components/FireList.vue";
+import Query from "./components/Query.vue";
 import GoogleProvider from "./components/GoogleProvider.vue";
 import Scope from "./components/Scope.vue";
 import OAuthParam from "./components/OAuthParam.vue";
@@ -100,7 +100,7 @@ export default {
   name: "app",
   components: {
     FireProvider,
-    FireList,
+    Query,
     FireAuth,
     AuthUi,
     GoogleProvider,

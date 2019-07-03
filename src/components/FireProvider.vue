@@ -9,6 +9,10 @@ import * as firebase from "firebase/app";
 import "firebase/database";
 import "firebase/auth";
 
+// Allows the creation of uniquely named firebase apps
+// when there are multiple FireProviders.
+let firebaseInstanceId = 0;
+
 /**
  * Provides the firebase client to child components. This
  * should be at the root of your component tree to use other
@@ -19,7 +23,8 @@ export default {
 
   provide() {
     return {
-      firebase: this.firebase
+      firebase: this.firebase,
+      firebaseApp: this.firebase.initializeApp(this.config, this.name)
     };
   },
 
@@ -29,9 +34,13 @@ export default {
     };
   },
 
+  /*
   created() {
-    firebase.initializeApp(this.config);
+    // TODO(dmattia): Add the name of the app as a param
+    console.log(`I am initializing the firebase app ${this.name}`);
+    this.app = firebase.initializeApp(this.config, this.name);
   },
+  */
 
   computed: {
     config() {
@@ -78,6 +87,7 @@ export default {
       required: false,
       default: null
     },
+
     /**
      * AuthDomain from firebase config. Needed for AuthUi components.
      */
@@ -85,13 +95,15 @@ export default {
       type: String,
       default: null
     },
+
     /**
-     * DatabaseURL from firebase config. Needed for FireList and FireObject components.
+     * DatabaseURL from firebase config. Needed for Query and FireObject components.
      */
     databaseURL: {
       type: String,
       default: null
     },
+
     /**
      * ProjectId from firebase config.
      */
@@ -99,6 +111,7 @@ export default {
       type: String,
       default: null
     },
+
     /**
      * StorageBucket from firebase config.
      */
@@ -106,6 +119,7 @@ export default {
       type: String,
       default: null
     },
+
     /**
      * MessagingSenderId from firebase config. FCM is not a part of this library.
      */
@@ -113,12 +127,28 @@ export default {
       type: String,
       default: null
     },
+
     /**
      * AppId from firebase config.
      */
     appId: {
       type: String,
       default: null
+    },
+
+    /**
+     * Name for this firebase instance, used if you have multiple FireProviders.
+     */
+    name: {
+      type: String,
+      default() {
+        if (firebaseInstanceId === 0) {
+          firebaseInstanceId++;
+          return "[DEFAULT]";
+        }
+
+        return `[FIREBASE#${firebaseInstanceId++}]`;
+      }
     }
   }
 };

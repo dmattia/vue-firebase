@@ -1,4 +1,14 @@
-Basic example with some providers
+# AuthUi
+
+Basic example with some providers:
+
+TODO(dmattia): Add `SimpleAuthUi.vue` that looks like: `<SimpleAuthUi config="config" />`
+
+TODO(dmattia): Make use of `SimpleAuthUi` from `AuthUi` to dedup logic
+
+TODO(dmattia): Link to official firebaseui docs
+
+TODO(dmattia): Explain briefly that this can be used for both logins + sign ups.
 
 ```vue
 <FireProvider

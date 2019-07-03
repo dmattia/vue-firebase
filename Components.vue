@@ -6,7 +6,7 @@ import CustomProvider from "./components/AuthProvider.vue";
 import EmailProvider from "./components/EmailProvider.vue";
 import FacebookProvider from "./components/FacebookProvider.vue";
 import FireAuth from "./components/FireAuth.vue";
-import FireList from "./components/FireList.vue";
+import Query from "./components/Query.vue";
 import FireObject from "./components/FireObject.vue";
 import FireProvider from "./components/FireProvider.vue";
 import GithubProvider from "./components/GithubProvider.vue";
@@ -26,7 +26,7 @@ export default {
   EmailProvider,
   FacebookProvider,
   FireAuth,
-  FireList,
+  Query,
   FireObject,
   FireProvider,
   GithubProvider,
